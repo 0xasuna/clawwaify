@@ -1,0 +1,127 @@
+default_provider = "opencode"
+default_model = "default"
+default_temperature = 0.7
+model_routes = []
+
+[observability]
+backend = "none"
+
+[autonomy]
+level = "full"
+workspace_only = true
+allowed_commands = [
+    "git",
+    "npm",
+    "cargo",
+    "ls",
+    "cat",
+    "grep",
+    "find",
+    "echo",
+    "pwd",
+    "wc",
+    "head",
+    "tail",
+]
+forbidden_paths = [
+    "/etc",
+    "/root",
+    "/home",
+    "/usr",
+    "/bin",
+    "/sbin",
+    "/lib",
+    "/opt",
+    "/boot",
+    "/dev",
+    "/proc",
+    "/sys",
+    "/var",
+    "/tmp",
+    "~/.ssh",
+    "~/.gnupg",
+    "~/.aws",
+    "~/.config",
+]
+max_actions_per_hour = 20
+max_cost_per_day_cents = 500
+require_approval_for_medium_risk = true
+block_high_risk_commands = true
+
+[runtime]
+kind = "native"
+
+[runtime.docker]
+image = "alpine:3.20"
+network = "none"
+memory_limit_mb = 512
+cpu_limit = 1.0
+read_only_rootfs = true
+mount_workspace = true
+allowed_workspace_roots = []
+
+[reliability]
+provider_retries = 2
+provider_backoff_ms = 500
+fallback_providers = []
+channel_initial_backoff_secs = 2
+channel_max_backoff_secs = 60
+scheduler_poll_secs = 15
+scheduler_retries = 2
+
+[heartbeat]
+enabled = false
+interval_minutes = 30
+
+[channels_config]
+cli = true
+
+[memory]
+backend = "markdown"
+auto_save = true
+hygiene_enabled = false
+archive_after_days = 0
+purge_after_days = 0
+conversation_retention_days = 30
+embedding_provider = "none"
+embedding_model = "text-embedding-3-small"
+embedding_dimensions = 1536
+vector_weight = 0.7
+keyword_weight = 0.3
+embedding_cache_size = 0
+chunk_max_tokens = 512
+
+[tunnel]
+provider = "none"
+
+[gateway]
+port = 3000
+host = "127.0.0.1"
+require_pairing = false
+allow_public_bind = true
+paired_tokens = []
+pair_rate_limit_per_minute = 10
+webhook_rate_limit_per_minute = 60
+idempotency_ttl_secs = 300
+
+[composio]
+enabled = false
+entity_id = "default"
+
+[secrets]
+encrypt = true
+
+[browser]
+enabled = false
+allowed_domains = []
+
+[http_request]
+enabled = false
+allowed_domains = []
+max_response_size = 0
+timeout_secs = 0
+
+[identity]
+format = "openclaw"
+
+[agents]
